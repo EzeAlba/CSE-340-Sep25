@@ -1,10 +1,4 @@
-/******* Change Box Model ***************/
-@media only screen and (min-width: 45rem) {
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
+@media (max-width: 768px) {
 
 header{
   display:flex;
@@ -16,8 +10,7 @@ header{
 nav{
 width: 100%;
 margin-top: 5%;
-}
-
+}    
 nav ul li{
   display: flex;
   margin: 10px;
@@ -25,19 +18,9 @@ nav ul li{
   align-items: center;
 }
 
-body{
-  background-image: url(/images/site/small_check.jpg)
-}
-
 h2{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 2em;
-  display:flex;
-}
-
-a{
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-font-size: 1em;
 }
 
 p{
@@ -45,12 +28,18 @@ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 font-size: 1.5em;
 }
 
+a{
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+font-size: 1em;
+}
+
 li{
 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 font-size: 1.5em;
 }
 
-/* Class Selectors */
+
+/*class selectors*/
 .siteName{
   font-weight:bold;
   font-size: 100%;
@@ -74,28 +63,20 @@ font-size: 1.5em;
   text-align: center;
   overflow: auto;
 }
-
-
+  .hero {
+    grid-template-columns: 1fr;
+  }
 .image-button{
   background-color: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
-
 }
 
 .image-button img{
   width: 100%;
   height: 100%;
 }
-
-
-
-.box {
-  text-align: center;
-  margin-top: 20px;
-}
-
 
 .box a {
   display: block;
@@ -107,15 +88,7 @@ font-size: 1.5em;
   height: 100%;
 }
 
-/* IDs*/
-#wrapper{
-  background-color: rgb(255, 255, 255);
-  padding: 20px;
-  margin: 40px;
-  border-radius: 15px;
-  border-width: 35px;
-  border: 5px solid #3498db;
-}
+/*IDs Selectors*/
 
 #menu{
   background-color: black;
@@ -125,7 +98,6 @@ font-size: 1.5em;
   margin: 0;
   padding: 0;
 }
-
 #menu{
   margin: 0 0px;
 }
@@ -139,13 +111,12 @@ font-size: 1.5em;
 #menu a:hover{
   background-color: rgb(112, 109, 109);
 }
-
-#sectors{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-top: 2rem;
-}
+  #sectors {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    padding: 2rem;
+  }
 
 #upgrades{
   display: grid;
@@ -164,22 +135,8 @@ text-align: center;
   text-align: left;
 }
 
-#reviews{
-  grid-column: 2 / 3;
-  grid-row: 1 / -1;
-}
-
-#reviews h2{
-  margin-bottom: 10px;
-
-}
-
-#reviews ul{
-  list-style-type: disc;
-  padding-left: 1.5rem;
-}
-
-#reviews li{
-  margin-bottom: 10px;
-}
+  #reviews {
+    margin-top: 2rem;
+    grid-row: 1 / span 2;
+  }
 }
