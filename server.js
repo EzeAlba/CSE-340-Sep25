@@ -32,6 +32,14 @@ app.use("/inv", inventoryRoute)
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
+
+/* ***********************
+ * Local Server Information
+ * Values from .env (environment) file
+ *************************/
+const port = process.env.PORT || 5500
+const host = process.env.HOST || "localhost"
+
 /* ***********************
 * Express Error Handler
 * Place after all other middleware
@@ -46,13 +54,6 @@ app.use(async (err, req, res, next) => {
   })
 })
 
-
-/* ***********************
- * Local Server Information
- * Values from .env (environment) file
- *************************/
-const port = process.env.PORT
-const host = process.env.HOST
 
 /* ***********************
  * Log statement to confirm server operation
