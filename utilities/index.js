@@ -58,6 +58,32 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+
+
+/* **************************************
+* Formatting the item detail view HTML
+* ************************************ */
+Util.formatItem = async function(item){
+  const formattedPrice = Number(item.inv_price).toLocaleString('en-US', {style: 'currency', currency: 'USD'})
+  const formattedMileage = Number(item.inv_miles).toLocaleString()
+
+  const itemHTML = `
+  <div class = "detail">
+    <img src ="${item.inv_image}" alt = "${item.inv_make} ${item.inv_model}" class="image" />
+    <div class = "item-content">
+      <h2>${item.inv_make} ${item.inv_model}</h2>
+      <p>Make and Model:${item.inv_make} ${item.inv_model}</p>
+      <p>Year: ${item.inv_year}</p>
+      <p>Price: ${formattedPrice}</p>
+      <p>Mileage: ${formattedMileage}</p>
+      <p>Description: ${item.inv_description}</p>
+    </div>
+  </div>
+    `
+  return itemHTML
+}
+
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

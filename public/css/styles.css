@@ -183,3 +183,101 @@ text-align: center;
   margin-bottom: 10px;
 }
 }
+
+
+/*Inventory Classification View*/
+ul#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  padding: 25px;
+  list-style-type: none;
+  margin: 0;
+}
+
+ul#inv-display li {
+  border: 3px solid #000000;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: -8px 9px 20px rgba(0, 0, 0, 0.7);
+  background-color: #fff;
+}
+
+ul#inv-display li a {
+  display: block;
+}
+
+ul#inv-display li img {
+  width: 100%;
+  height: auto;
+}
+
+ul#inv-display li .namePrice {
+  padding: 10px;
+  background-color: #f8f8f8;
+}
+
+ul#inv-display li h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+  text-align: center;
+}
+
+ul#inv-display li span {
+  font-size: 16px;
+  color: #103dd2;
+  font-weight: bold;
+  text-align: center !important;
+  display: block; 
+}
+
+ul#inv-display li .namePrice hr {
+  margin: 10px 0;
+  border: 0;
+  border-top: 1px solid #ddd;
+}
+
+/* Item Details Section */
+.detail {
+  display: flex;  
+  flex-direction: row;  
+  align-items: flex-start;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.image {
+  object-fit: cover;  
+  border-radius: 6px;
+  margin-right: 20px;  
+}
+
+.item-content {
+  display: grid;  
+  grid-template-columns: 1fr;  
+  gap: 10px; 
+}
+
+.detail h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #000000;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.detail p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #103dd2;
+}
+
+.detail p + p {
+  margin-top: 8px;
+}
