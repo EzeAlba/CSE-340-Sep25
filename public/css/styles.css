@@ -298,3 +298,73 @@ ul#inv-display li .namePrice hr {
 .detail p + p {
   margin-top: 8px;
 }
+
+
+
+/*Login*/
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.notice {
+  background-color: #ffcccb;
+  color: #721c24;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  list-style: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  margin: 0 auto;
+  background-color:#0056b3; 
+  padding: 20px; 
+  border-radius: 10px; 
+}
+
+label {
+  margin-top: 5px; 
+  font-weight: bold;
+  font-size: 14px; 
+}
+
+input {
+  padding: 8px; 
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px; 
+}
+
+form button {
+  margin-top: 15px; 
+  padding: 8px; 
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px; 
+}
+
+form button:hover {
+  background-color: #000000;
+}
+
+/*p {
+  text-align: center;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+a:hover {
+  text-decoration: underline;
+}*/

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head.ejs") %>
+  <body>
+      <main>
+        <h1><%= title %></h1>
+        <%- messages() %>
+
+          <% if (errors) { %>
+            <ul class="notice">
+           <% errors.array().forEach(error => { %>
+             <li><%= error.msg %></li>
+          <%  }) %>
+           </ul>
+          <% } %>
+
+        <!--form -->
+        <form action="/account/register" method="post">
+          <label for="first-name">First Name:</label>
+          <input
+            type="text"
+            id="first-name"
+            name="first-name" 
+            required
+            data-trail="first-name"
+            value="<%= locals.account_firstname %>"
+          />
+
+          <label for="last-name">Last Name:</label>
+          <input
+            type="text"
+            id="last-name"
+            name="last-name"  
+            required
+            data-trail="last-name"
+            value="<%= locals.account_lastname %>"
+          />
+
+          <label for="email">Email Address:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"  
+            required
+            data-trail="email"
+            value="<%= locals.account_email %>"
+          />
+
+          <label for="password">Password:</label>
+          <div class="password-wrapper">
+            <input
+              type="password"
+              id="password"
+              name="password"  
+              required
+              data-trail="password"
+              pattern="(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{12,}"
+              title="Password must be at least 12 characters long and contain at least one uppercase letter, one number, and one special character."
+            />
+            <button
+              type="button"
+              id="toggle-password"
+              aria-label="Toggle Password Visibility"
+            >
+              👁
+            </button>
+          </div>
+
+          <label for="confirm-password">Confirm Password:</label>
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirmPassword" 
+            required
+            data-trail="confirmPassword"
+          />
+          <button type="submit">Register</button>
+        </form>
+
+        <p>Already registered? <a href="/account/login">Login</a></p>
+      </main>
+    <script src="/js/script.js"></script>
+  </body>
+</html>
