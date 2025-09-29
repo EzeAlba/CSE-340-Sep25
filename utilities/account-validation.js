@@ -6,7 +6,7 @@ const utilities = require(".")
   /*  **********************************
   *  Registration Data Validation Rules
   * ********************************* */
-  validate.registationRules = () => {
+  validate.registrationRules = () => {
     return [
       // firstname is required and must be string
       body("account_firstname")
@@ -79,18 +79,24 @@ validate.checkRegData = async (req, res, next) => {
 
 
  /*  **********************************
-  *  Registration Data Validation Rules
+  *  Login Data Validation Rules
   * ********************************* */
   validate.loginRules = () => {
     return [
-      // valid email is required and cannot already exist in the DB
+      // valid email is required 
       body("login_email")
       .trim()
       .escape()
       .notEmpty()
       .isEmail()
       .normalizeEmail() // refer to validator.js docs
-      .withMessage("A valid email is required."),
+      .withMessage("A valid email is required.")
+      .custom(async (login_email) => {
+        const emailExists = await accountModel.checkExistingEmail(login_email)
+        if (!emailExists) {
+          throw new Error("Please check your email and try again..");
+        }
+      }),
   
       // password is required and must be strong password
       body("login_password")
@@ -103,11 +109,28 @@ validate.checkRegData = async (req, res, next) => {
           minNumbers: 1,
           minSymbols: 1,
         })
-        .withMessage("Password does not meet requirements."),
+        .withMessage("Password Incorrect"),
     ]
   }
 
-
+/* ******************************
+ * Check data and return errors or continue to Login
+ * ***************************** */
+validate.checkLoginData = async (req, res, next) => {
+  const { account_email } = req.body;
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    res.render("account/login", {
+      title: "Login",
+      nav,
+      errors,
+      account_email,
+    });
+  }
+  next();
+};
 
 
 

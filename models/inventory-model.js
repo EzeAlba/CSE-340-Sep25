@@ -25,8 +25,48 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
-//GET specific details from inventory Item by item_id
 
+async function addInventoryClassByName(inv_class){
+  try {
+    const data = await pool.query(`
+      INSERT INTO public.classification (classification_name)
+      VALUES ($1)`,
+    [inv_class])
+    return data.rows
+  }
+  catch (error) {
+    console.error("addInventoryClassByName error " + error)
+  }
+}
+
+
+async function addInventoryItem(classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color){
+  try {
+    const data = await pool.query(`
+    INSERT INTO inventory (classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+    [classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color]
+    )
+    return data.rows
+  } catch (error) {
+    console.error("addInventoryItem error " + error)
+  }
+}
+
+/* **********************
+ *   Check for existing class
+ * ********************* */
+async function checkExistingClass(classification_name){
+  try {
+    sql = "SELECT * FROM public.classification WHERE classification_name = $1"  
+    return await pool.query (sql,[classification_name])
+  } catch (error) {
+    console.error("checkExistingClass error " + error)
+    return error.message
+  }
+}
+
+//GET specific details from inventory Item by item_id
 async function getItemById(itemId) {
   try{
     const data = await pool.query(
@@ -50,4 +90,11 @@ async function getItemById(itemId) {
   
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getItemById}
+module.exports = {
+  getClassifications, 
+  getInventoryByClassificationId, 
+  getItemById, 
+  checkExistingClass,
+  addInventoryItem,
+  addInventoryClassByName
+}

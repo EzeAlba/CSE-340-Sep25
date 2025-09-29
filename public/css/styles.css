@@ -321,7 +321,7 @@ form {
   flex-direction: column;
   width: 280px;
   margin: 0 auto;
-  background-color:#0056b3; 
+  background-color:#0079FA; 
   padding: 20px; 
   border-radius: 10px; 
 }
@@ -344,7 +344,7 @@ form button {
   margin-top: 15px; 
   padding: 8px; 
   background-color: #007bff;
-  color: white;
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;

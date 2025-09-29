@@ -1,33 +1,34 @@
 // Needed Resources 
 const express = require("express")
 const router = new express.Router() 
-const utilities = require("../utilities/index")
+const utilities = require("../utilities/index.js")
 const accountController = require ("../controllers/accountController")
-const regValidate = require('../utilities/account-validation')
+const regValidate = require('../utilities/account-validation.js')
 
-router.post('/register', accountController.handleRegister);
+// Route for login
+router.get('/login', utilities.handleErrors(accountController.buildLogin));
+// Process the login attempt
+router.post(
+  "/login",
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  //utilities.handleErrors(accountController.accountLogin)
+  (req, res) => {
+    res.status(200).send('login process')}
+)
+
+// Route for registration
+router.get('/register', utilities.handleErrors(accountController.buildRegister));
 // Process the registration data
+// Process validation rules for registration
 router.post(
   "/register",
-  regValidate.registationRules(),
+  regValidate.registrationRules(),
   regValidate.checkRegData,
   utilities.handleErrors(accountController.registerAccount)
 )
 
-// Process the login attempt
-router.post(
-  "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
-)
 
-// Route for login
-router.get('/login', accountController.buildLogin);
-
-
-// Route for registration
-router.get('/register', accountController.buildRegister);
 
 // Middleware for errors
 router.use((err, req, res, next) => {

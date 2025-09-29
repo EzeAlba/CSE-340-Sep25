@@ -5,14 +5,13 @@
       <main>
         <h1><%= title %></h1>
         <%- messages() %>
-
-          <% if (errors) { %>
-            <ul class="notice">
-           <% errors.array().forEach(error => { %>
-             <li><%= error.msg %></li>
-          <%  }) %>
+        <% if (errors) { %>
+           <ul class="notice">
+              <% errors.array().forEach(error=> { %>
+                 <li><%= error.msg %></li>
+               <% }) %>
            </ul>
-          <% } %>
+         <% } %>
 
         <!--form -->
         <form action="/account/register" method="post">
@@ -20,7 +19,7 @@
           <input
             type="text"
             id="first-name"
-            name="first-name" 
+            name="account_firstname" 
             required
             data-trail="first-name"
             value="<%= locals.account_firstname %>"
@@ -30,7 +29,7 @@
           <input
             type="text"
             id="last-name"
-            name="last-name"  
+            name="account_lastname"  
             required
             data-trail="last-name"
             value="<%= locals.account_lastname %>"
@@ -40,7 +39,8 @@
           <input
             type="email"
             id="email"
-            name="email"  
+            name="account_email"  
+            pattern="^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,3}$"
             required
             data-trail="email"
             value="<%= locals.account_email %>"
@@ -51,7 +51,7 @@
             <input
               type="password"
               id="password"
-              name="password"  
+              name="account_password"  
               required
               data-trail="password"
               pattern="(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{12,}"
@@ -65,15 +65,7 @@
               👁
             </button>
           </div>
-
-          <label for="confirm-password">Confirm Password:</label>
-          <input
-            type="password"
-            id="confirm-password"
-            name="confirmPassword" 
-            required
-            data-trail="confirmPassword"
-          />
+          <span class="form_instruct">Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
           <button type="submit">Register</button>
         </form>
 

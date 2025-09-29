@@ -1,0 +1,95 @@
+<div>
+    <% if (title) { %>
+        <h1>
+            <%= title %>
+        </h1>
+        <%- messages() %>
+            <% } else { res.redirect('/') } %>
+</div>
+<% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error=> { %>
+            <li>
+                <%= error.msg %>
+            </li>
+            <% }) %>
+    </ul>
+    <% } %>
+
+        <form action="/inv/addInv" method="post" id="add_inv">
+            <fieldset>
+                <h2>All fields are required</h2>
+                <div class="form_part">
+                    <label>
+                        <span class="form_direct">Classification</span>
+                        <select name="classification_id" id="className"  required>
+                            <option value="<%= locals.classification_id %>">Choose a Classification</option>
+                            <%- classDrop %>
+                        </select>
+                    </label>
+                </div>
+                <div class="form_part">
+                    <label>
+                        Make
+                        <input type="text" name="inv_make" id="invMake" required placeholder="Min of 3 characters" pattern="^.{3,}$"
+                            value="<%= locals.inv_make %>">
+                        <!-- <input name="account_firstname" type="text" > -->
+                    </label>
+                </div>
+                <div class="form_part">
+                    <label>
+                        Model
+                        <input type="text" name="inv_model"  id="invModel" required placeholder="Min of 3 characters" pattern="^.{3,}$"
+                            value="<%= locals.inv_model %>" >
+                    </label>
+                </div>
+                <div class="form_part">
+                    <label>
+                        Year
+                        <input type="number" name="inv_year" 
+                            id="invYear" required value="<%= locals.inv_year %>" placeholder="4-digit year">
+                    </label>
+                </div>
+                <div class="form_part">
+                    <label>
+                        Description
+                        <input name="inv_description" id="invDescription" type="text" value="<%= locals.inv_description %>" required>
+                    </label>
+                </div>
+                <div class="form_part">
+                    <label>
+                        Image Path
+                        <!-- serverside should validate special character exclusion -->
+                        <input name="inv_image" id="invImage" type="text" required value="/images/vehicles/no-image.png" pattern="^\/images\/vehicles\/[a-zA-Z0-9_-]+\.(jpg|jpeg|png)$">
+                    </label>
+                </div>
+                <div class="form_part">
+                    <label>
+                        Thumbnail Path
+                        <!-- serverside should validate special character exclusion -->
+                        <input name="inv_thumbnail" id="invThumbnail" type="text" required value="/images/vehicles/no-image.png" pattern="^\/images\/vehicles\/[a-zA-Z0-9_-]+\.(jpg|jpeg|png)$">
+                    </label>
+                </div>
+                <div class="form_part">
+                    <label>
+                        Price
+                        <input name="inv_price" id="invPrice" type="number" step="0.01" value="<%= locals.inv_price %>" required placeholder="Decimal or integer">
+                    </label>
+                </div>
+                <div class="form_part">
+                    <label>
+                        Miles
+                        <input name="inv_miles" id="invMiles" type="number" required placeholder="Numbers only" value="<%= locals.inv_miles %>">
+                    </label>
+                </div>
+                <div class="form_part">
+                    <label>
+                        Color
+                        <input name="inv_color" id="invColor" type="text" value="<%= locals.inv_color %>" required pattern="^\w{1,}$">
+                    </label>
+                </div>
+
+                <button>Add Vehicle</button>
+            </fieldset>
+
+        </form>

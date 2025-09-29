@@ -1,5 +1,5 @@
-const utilities = require("../utilities/index")
-const accountModel = require("../models/account-model")
+const utilities = require('../utilities/index.js')
+const accountModel = require("../models/account-model.js")
 const bcrypt = require("bcryptjs")
 
 /* ****************************************
@@ -10,6 +10,7 @@ async function buildLogin(req, res, next) {
   res.render("account/login", {
     title: "Login",
     nav,
+    errors:null,
   })
 }
 
@@ -21,25 +22,8 @@ async function buildRegister(req, res, next) {
   res.render("account/register", {
     title: "Register",
     nav,
-    errors: null
+    errors: null,
   })
-}
-
-async function handleRegister(req, res, next) {
-  try {
-    const { name, email, password, confirmPassword } = req.body;  
-    // check pass
-    if (password !== confirmPassword) {
-      req.flash("notice", "Passwords do not match.");  
-      return res.redirect("/account/register");  
-    }
-    //test logs
-    console.log(`User: ${name}, Email: ${email}`);
-    req.flash("notice", "Registration successful. Please log in.");
-    res.redirect("/account/login");  
-  } catch (error) {
-    next(error); 
-  }
 }
 
 
@@ -48,7 +32,11 @@ async function handleRegister(req, res, next) {
 * *************************************** */
 async function registerAccount(req, res) {
   let nav = await utilities.getNav()
-  const { account_firstname, account_lastname, account_email, account_password } = req.body
+  const { account_firstname, 
+          account_lastname, 
+          account_email, 
+          account_password 
+        } = req.body
 
   // Hash the password before storing
   let hashedPassword
@@ -85,8 +73,9 @@ async function registerAccount(req, res) {
     res.status(501).render("account/register", {
       title: "Registration",
       nav,
+      errors: null,
     })
   }
 }
-module.exports = { buildLogin, buildRegister, registerAccount, handleRegister }
+module.exports = { buildLogin, buildRegister, registerAccount}
 

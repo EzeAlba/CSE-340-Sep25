@@ -59,6 +59,46 @@ Util.buildClassificationGrid = async function(data){
 }
 
 
+//Build inventory dropdown
+Util.buildClassificationDropdown = async function (classification_id) {
+  let selectedOption = classification_id;
+  let data = await invModel.getClassifications();
+  console.log("buildClassificationDropdown data", data);
+  let classDropOptions = "";
+  data.rows.forEach((row) => {
+    if (row.classification_id == selectedOption) {
+      classDropOptions += `<option value="${row.classification_id}" selected>${row.classification_name}</option>`;
+    } else {
+      classDropOptions += `<option value="${row.classification_id}">${row.classification_name}</option>`;
+    }
+  });
+  console.log("classDrop", classDropOptions);
+  return classDropOptions;
+};
+
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+  // console.log("Checking login");
+  try {
+    const decoded = jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET
+    );
+    if (res.locals.loggedin && req.cookies.jwt && decoded) {
+      console.log("Token passed");
+      console.log("Checking decoded Token:", decoded);
+      res.locals.user = decoded;
+      next();
+    } else {
+      Util.accountFail(req, res, next);
+    }
+  } catch (error) {
+    Util.accountFail(req, res, next);
+  }
+};
 
 /* **************************************
 * Formatting the item detail view HTML
@@ -90,5 +130,9 @@ Util.formatItem = async function(item){
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+
+
+
 
 module.exports = Util
