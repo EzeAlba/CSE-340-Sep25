@@ -1,4 +1,6 @@
 const invModel = require("../models/inventory-model")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 const Util = {}
 
 /* ************************
@@ -78,9 +80,9 @@ Util.buildClassificationDropdown = async function (classification_id) {
 
 
 /* ****************************************
- *  Check Login
+ *  Check Login JWT
  * ************************************ */
-Util.checkLogin = (req, res, next) => {
+/*Util.checkLogin = (req, res, next) => {
   // console.log("Checking login");
   try {
     const decoded = jwt.verify(
@@ -98,7 +100,18 @@ Util.checkLogin = (req, res, next) => {
   } catch (error) {
     Util.accountFail(req, res, next);
   }
-};
+};*/
+
+Util.checkLogin = (requ, res, next) => {
+  if (res.locals.loggedin){
+    next()
+  }else{
+    requ.flash("notice","Please log in")
+    return res.redirect("/account/login")
+  }
+}
+
+
 
 /* **************************************
 * Formatting the item detail view HTML
@@ -123,6 +136,26 @@ Util.formatItem = async function(item){
   return itemHTML
 }
 
+//Check token validity
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt){
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function(err, accountData){
+        if(err){
+          req.flash("notice", "Please Log In")
+          res.clearCookie("jwt")
+          return res.redirect("/account/login")
+        }
+        res.locals.accountData = accountData
+        res.locals.loggedin = 1
+        next()
+      })
+  }else{
+    next()
+  }
+}
 
 /* ****************************************
  * Middleware For Handling Errors
@@ -131,7 +164,31 @@ Util.formatItem = async function(item){
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
-
+/* ****************************************
+ *  check Account Type for permissions
+ * if account type !admin and !employee, redirect + error to login page
+ * ************************************ */
+Util.checkAccountType = (req, res, next) => {
+  try {
+    if (
+      res.locals.loggedin &&
+      req.cookies.jwt &&
+      !(
+        res.locals.user.account_type === "Admin" ||
+        res.locals.user.account_type === "Employee"
+      )
+    ) {
+      req.flash(
+        "notice",
+        "You are not have sufficient permission to access this resource. Please log into an authorized account."
+      );
+      return res.redirect("/account/login");
+    }
+    next();
+  } catch (error) {
+    Util.checkJWTToken(req, res, next);
+  }
+};
 
 
 

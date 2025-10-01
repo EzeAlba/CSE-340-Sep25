@@ -5,16 +5,21 @@ const utilities = require("../utilities/index.js")
 const accountController = require ("../controllers/accountController")
 const regValidate = require('../utilities/account-validation.js')
 
+//route to get the account.ejs view after login
+router.get(
+  "/",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildAccount)
+);
+
 // Route for login
 router.get('/login', utilities.handleErrors(accountController.buildLogin));
 // Process the login attempt
 router.post(
-  "/login",
+  '/login',
   regValidate.loginRules(),
   regValidate.checkLoginData,
-  //utilities.handleErrors(accountController.accountLogin)
-  (req, res) => {
-    res.status(200).send('login process')}
+  utilities.handleErrors(accountController.accountLogin)
 )
 
 // Route for registration

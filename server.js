@@ -1,6 +1,26 @@
 /* ******************************************
  * This server.js file is the primary file of the 
  * application. It is used to control the project.
+ * 
+Account1-  11ZNZA
+account_firstname: Basic
+account_lastname: Client
+account_email: basic@340.edu
+account_password: I@mABas1cCl!3nt
+
+Account 2 - 
+account_firstname: Happy
+account_lastname: Employee
+account_email: happy@340.edu
+account_password: I@mAnEmpl0y33
+
+Account 3
+account_firstname: Manager
+account_lastname: User
+account_email: manager@340.edu
+account_password: I@mAnAdm!n1strat0r
+ * 
+ * 
  *******************************************/
 /* ***********************
  * Require Statements
@@ -17,7 +37,7 @@ const utilities = require('./utilities/')
 const session = require("express-session")
 const pool = require('./database/')
 const bodyParser = require("body-parser")
-
+const cookieParser = require("cookie-parser")
 
 
 /* ***********************
@@ -36,7 +56,8 @@ const bodyParser = require("body-parser")
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
 // Express Messages Middleware
 app.use(require('connect-flash')())
 app.use(function(req, res, next){

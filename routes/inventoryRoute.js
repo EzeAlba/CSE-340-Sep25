@@ -11,6 +11,30 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 //route to show specific details
 router.get("/detail/:itemId",invController.buildDetail)
 
+//Get inventory for AJAX route
+router.get(
+    "/getInventory/:classification_id",
+    utilities.checkAccountType,
+    utilities.handleErrors(invController.getInventoryJSON)
+)
+
+//view edit update route page
+router.get(
+    "/edit/:inventoryId",
+    utilities.checkLogin,
+    utilities.checkAccountType,
+    utilities.handleErrors(invController.buildEditInv)
+)
+
+//handle the update request
+router.post("/update/",
+    utilities.checkLogin, 
+    utilities.checkAccountType,
+    inventoryValidation.addInvRules(),
+    inventoryValidation.checkUpdateData,
+    utilities.handleErrors(invController.updateInventory)
+)
+
 //routes to build the Vehicle Management
 router.get("/",utilities.handleErrors(invController.buildVehicleManager))
 router.get("/addClass",utilities.handleErrors(invController.buildAddClass))
