@@ -343,7 +343,7 @@ input {
 form button {
   margin-top: 15px; 
   padding: 8px; 
-  background-color: #007bff;
+  background-color: #ffffff;
   color: black;
   border: none;
   border-radius: 5px;
@@ -353,6 +353,7 @@ form button {
 
 form button:hover {
   background-color: #000000;
+  color: #ccc;
 }
 
 /*p {

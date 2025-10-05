@@ -1,0 +1,83 @@
+<div>
+    <div>
+        <h1><%-title-%></h1>
+        <%- messages() %>
+    </div>
+    <% if (errors) { %>
+        <ul class="notice">
+            <% errors.array().forEach(error=> { %>
+                <li>
+                    <%= error.msg %>
+                </li>
+                <% }) %>
+        </ul>
+        <% } %>
+            <section>
+                <h2>Edit Account</h2>
+                <form action="/account/update" method="post" id="account_update">
+                    <fieldset>
+                        <div class="form_part">
+                            <label>
+                                First Name
+                                <input type="text" name="account_firstname" id="accountFirstname" required
+                                    value="<%= user.account_firstname %>">
+                            </label>
+                        </div>
+                        <div class="form_part">
+                            <label>
+                                Last Name
+                                <input name="account_lastname" type="text" id="accountLastname"
+                                    value="<%= user.account_lastname %>">
+                            </label>
+                        </div>
+                        <div class="form_part">
+                            <label>
+                                Email Address
+                                <input name="account_email" type="email" required
+                                    pattern="^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,3}$" id="accountEmail"
+                                    value="<%= user.account_email %>">
+                            </label>
+                        </div>
+                        <input type="hidden" name="account_id" value="<%= user.account_id %>">
+                        <button class="register_button">Update Account</button>
+
+                    </fieldset>
+                </form>
+            </section>
+            <section>
+                <h2>Change Password</h2>
+                <form action="/account/update/password" method="post" id="account_password">
+
+                    <fieldset>
+                        <div class="form_part">
+                            <label for="password">
+                                Account Password
+                              </label>
+                              <input 
+                                name="account_password" 
+                                id="password" 
+                                type="password" 
+                                required
+                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+                              >
+                              <button
+                                type="button"
+                                id="toggle-password"
+                                aria-label="Toggle Password Visibility"
+                              >
+                                Show Password
+                              </button>
+                              <p>This action will overwrite your previous password.</p>
+                              <span class="form_instruct">
+                                Passwords must be at least 12 characters and contain at least 1 number, 
+                                1 capital letter and 1 special character
+                              </span>
+                            </div>
+                        <input type="hidden" name="account_id" value="<%= user.account_id %>">
+                        <button class="register_button">Change password</button>
+
+                    </fieldset>
+                </form>
+            </section>
+            <script src="/js/script.js"></script>
+</div>

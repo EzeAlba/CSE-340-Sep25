@@ -22,6 +22,9 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 )
 
+//process logout request
+router.get("/logout", utilities.handleErrors(accountController.accountLogout));
+
 // Route for registration
 router.get('/register', utilities.handleErrors(accountController.buildRegister));
 // Process the registration data
@@ -33,7 +36,47 @@ router.post(
   utilities.handleErrors(accountController.registerAccount)
 )
 
+router.get(
+  "/admin",
+  utilities.checkLogin,
+  utilities.checkOwnership,
+  utilities.handleErrors(accountController.buildAdminPanel)
+);
 
+router.post(
+  "/admin",
+  utilities.checkLogin,
+  utilities.checkOwnership,
+  (req, res, next) => {
+    console.log("Processing bulk update", req.body);
+    next();
+  },
+  regValidate.adminUpdateRules(),
+  regValidate.checkadminUpdate,
+  utilities.handleErrors(accountController.processAdminBulkUpdate)
+);
+
+router.get(
+  "/edit/:accountId",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildEditAccount)
+);
+
+router.post(
+  "/update",
+  utilities.checkLogin,
+  regValidate.editAccountRules(),
+  regValidate.checkAccountData,
+  utilities.handleErrors(accountController.updateAccountInfo)
+);
+
+router.post(
+  "/update/password",
+  utilities.checkLogin,
+  regValidate.accountPasswordRules(),
+  regValidate.checkAccountPassword,
+  utilities.handleErrors(accountController.updateAccountPassword)
+);
 
 // Middleware for errors
 router.use((err, req, res, next) => {

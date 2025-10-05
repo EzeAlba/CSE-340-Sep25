@@ -235,4 +235,54 @@ invCont.updateInventory = async function (req, res, next) {
 }
 
 
+//building delete inventory view
+invCont.buildDeleteInv = async function (req, res, next) {
+  const inventory_id = parseInt(req.params.inventoryId)
+  let nav = await utilities.getNav()
+  const invItemData = await invModel.getInventoryByInventoryId(inventory_id)
+  const invItem = invItemData[0]
+  let classDrop = await utilities.buildClassificationDropdown(invItem.classification_id)
+  const itemName = `${invItem.inv_make} ${invItem.inv_model}`
+  res.render("./inventory/delete-confirm.ejs", {
+    title: `Delete ${itemName}`,
+    nav,
+    errors: null,
+    classDrop,
+    inv_id: invItem.inv_id,
+    inv_make: invItem.inv_make,
+    inv_model: invItem.inv_model,
+    inv_year: invItem.inv_year,
+    inv_description: invItem.inv_description,
+    inv_image: invItem.inv_image,
+    inv_thumbnail: invItem.inv_thumbnail,
+    inv_price: invItem.inv_price,
+    inv_miles: invItem.inv_miles,
+    inv_color: invItem.inv_color,
+    classification_id: invItem.classification_id,
+  })
+}
+
+
+/* ***************************
+ *  Delete Inventory Data
+ * ************************** */
+invCont.deleteInventory = async function (req, res) {
+  let nav = await utilities.getNav()
+  const {
+    inv_id
+  } = req.body
+  const invIdInt = parseInt(inv_id)
+  const deleteResult = await invModel.deleteInventoryitem(invIdInt)
+  if (deleteResult) {
+    const deleteitemName = deleteResult.inv_make + " " + deleteResult.inv_model
+    req.flash("notice", `The ${deleteitemName} was successfully deleted.`)
+    res.redirect("/inv/")
+  } else {
+    req.flash("notice", "Sorry, the insert failed.")
+    res.redirect(`/inv/delete/${inv_id}`)
+  }
+}
+
+
+
 module.exports = invCont
