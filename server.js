@@ -38,7 +38,7 @@ const session = require("express-session")
 const pool = require('./database/')
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
-
+const ratingRoute = require("./routes/ratingRoute")
 
 /* ***********************
  * Middleware
@@ -82,10 +82,13 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
 // Account route
 app.use("/account", accountRoute)
+//Rating route
+app.use("/rating",ratingRoute)
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
+
 
 /* ***********************
  * Local Server Information

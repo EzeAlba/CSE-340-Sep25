@@ -130,6 +130,8 @@ Util.checkLogin = (req, res, next) => {
       console.log("Token passed");
       console.log("Checking decoded Token:", decoded);
       res.locals.user = decoded;
+      //saving account_id to use on ratings
+      req.session.account_id = decoded.account_id;
       next();
     } else {
       Util.accountFail(req, res, next);
